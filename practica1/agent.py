@@ -1,10 +1,10 @@
 """
-
 ClauPercepcio:
     POSICIO = 0
     OLOR = 1
     PARETS = 2
 """
+
 from ia_2022 import entorn
 from practica1 import joc
 
