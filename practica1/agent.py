@@ -28,16 +28,16 @@ class Estat:
 
     def __eq__(self, other):
         if self[ClauPercepcio.POSICIO] == other[ClauPercepcio.POSICIO]:
-            return true
+            return True
         else:
-            return false 
+            return False 
 
     #La granota esta damunt la pizza.
     def es_meta(self) -> bool:
         if self[ClauPercepcio.POSICIO] == self[ClauPercepcio.OLOR]:
-            return true
+            return True
         else:
-            return false 
+            return False 
 
     #La posició pasada per paràmetre no és una paret i està dins el tauler.
     def es_possible(self) -> bool:
