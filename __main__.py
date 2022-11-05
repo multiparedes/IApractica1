@@ -1,5 +1,7 @@
-from practica1 import agent, joc
+import sys
+sys.path.append('C:\\Users\\marti\\Documents\\UIB\\IA\\ia_2022')
 
+from practica1 import agent, joc
 
 def main():
     rana = agent.Rana("Miquel")
