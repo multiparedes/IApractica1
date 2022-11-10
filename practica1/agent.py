@@ -5,6 +5,8 @@ ClauPercepcio:
     PARETS = 2
 """
 
+import copy
+from itertools import product
 from ia_2022 import entorn
 from practica1 import joc
 from practica1.entorn import ClauPercepcio, AccionsRana, Direccio
@@ -20,7 +22,8 @@ class Rana(joc.Rana):
     def actua(
             self, percep: entorn.Percepcio
     ) -> entorn.Accio | tuple[entorn.Accio, object]:
-        pass
+        Estat.generar_fills()
+        return AccionsRana.ESPERAR
 
 class Estat:
     def __init__(self, pare = None):
@@ -41,11 +44,20 @@ class Estat:
 
     #La posició pasada per paràmetre no és una paret i està dins el tauler.
     def es_possible(self) -> bool:
-        pass
+        #Checkeam cordenada X, Y i si no es troba damunt una paret.
+        if self[ClauPercepcio.POSICIO][0] < 0 and self[ClauPercepcio.POSICIO][0] > 8:
+            if self[ClauPercepcio.POSICIO][1] < 0 and self[ClauPercepcio.POSICIO][1] > 8:
+                if self[ClauPercepcio.POSICIO] not in self[ClauPercepcio.PARETS]:
+                    return True
+        return False            
 
     #Genera tots els possibles filles a partir del nostre estat actual.
     def generar_fills(self) -> list:
-        pass
+        l_accions = [AccionsRana.MOURE, AccionsRana.BOTAR]
+        l_direccions = [Direccio.BAIX, Direccio.DALT, Direccio.DRETA, Direccio.ESQUERRE]
+
+        for accio in product(l_accions, l_direccions):
+            print(accio)
 
     @property
     def pare(self):
