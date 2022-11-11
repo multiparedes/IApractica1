@@ -22,12 +22,22 @@ class Rana(joc.Rana):
     def actua(
             self, percep: entorn.Percepcio
     ) -> entorn.Accio | tuple[entorn.Accio, object]:
-        Estat.generar_fills()
-        return AccionsRana.ESPERAR
+        pass
 
 class Estat:
-    def __init__(self, pare = None):
+    def __init__(self, info: tuple[int,int], pes: int, pare = None):
         self.__pare = pare
+        self.__cord = info
+        self.__pes = pes
+
+    UTILITATS = {
+        Direccio.BAIX: (0, 1),
+        Direccio.DRETA: (1, 0),
+        Direccio.DALT: (0, -1),
+        Direccio.ESQUERRE: (-1, 0),
+        AccionsRana.BOTAR: 6,
+        AccionsRana.MOURE: 1
+    }
 
     def __eq__(self, other):
         if self[ClauPercepcio.POSICIO] == other[ClauPercepcio.POSICIO]:
@@ -37,10 +47,7 @@ class Estat:
 
     #La granota esta damunt la pizza.
     def es_meta(self) -> bool:
-        if self[ClauPercepcio.POSICIO] == self[ClauPercepcio.OLOR]:
-            return True
-        else:
-            return False 
+        return  self.__cord == self[ClauPercepcio.OLOR]:
 
     #La posició pasada per paràmetre no és una paret i està dins el tauler.
     def es_possible(self) -> bool:
@@ -56,8 +63,27 @@ class Estat:
         l_accions = [AccionsRana.MOURE, AccionsRana.BOTAR]
         l_direccions = [Direccio.BAIX, Direccio.DALT, Direccio.DRETA, Direccio.ESQUERRE]
 
+        fills = list()
+
         for accio in product(l_accions, l_direccions):
-            print(accio)
+            possible_fill = copy.deepcopy(self)
+            possible_fill.__pare = (self, accio)
+
+            possible_fill.__pes =+ self.UTILITATS.get(accio[0])
+
+            if accio == AccionsRana.BOTAR:
+                possible_fill.__cord =+ self.UTILITATS.get(accio[1]) * 2
+            else:
+                possible_fill.__cord =+ self.UTILITATS.get(accio[1])
+
+            if possible_fill.es_possible:
+                fills.append(possible_fill)
+            
+        return fills
+
+    #Per l'heurística emprarem la distància de Manhattan.
+    def calc_heuristica(self) -> int:
+        return (abs(self.__cord[0] - self[ClauPercepcio.OLOR][0]) + abs(self.__cord[1] - self[ClauPercepcio.OLOR][1]))
 
     @property
     def pare(self):
