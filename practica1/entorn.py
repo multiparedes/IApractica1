@@ -2,10 +2,12 @@ import enum
 
 from ia_2022 import entorn
 
+
 class ClauPercepcio(enum.Enum):
     POSICIO = 0
     OLOR = 1
     PARETS = 2
+    MIDA_TAULELL = 3
 
 class AccionsRana(entorn.Accio, enum.Enum):
     MOURE = 0

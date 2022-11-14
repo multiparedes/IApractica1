@@ -1,12 +1,14 @@
 import sys
-sys.path.append('C:\\Users\\marti\\Documents\\UIB\\IA\\ia_2022')
+sys.path.append('C:\\Users\\Silvia\\Documents\\Escola\\3rCarrera\\IA\\ia')
 
-from practica1 import agent, joc
+from practica1 import agent, joc, agent_amplada
+
 
 def main():
-    rana = agent.Rana("Miquel")
+    rana = agent_amplada.Rana("Miquel")
     lab = joc.Laberint([rana], parets=True)
     lab.comencar()
+
 
 if __name__ == "__main__":
     main()
